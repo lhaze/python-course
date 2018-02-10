@@ -4,6 +4,7 @@
 * hackr.io aggregator for [Python](https://hackr.io/tutorials/learn-python)
 * Intermediate:
   * [The Elements of Python Style](https://github.com/amontalenti/elements-of-python-style): beyond PEP8
+  * [Python Idioms](https://github.com/JeffPaine/beautiful_idiomatic_python) (might be a little outdated, 2013)
   * [Python Patterns](https://github.com/faif/python-patterns): A Borg? What are you talking to me?
 
 #### Django
