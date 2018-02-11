@@ -1,0 +1,46 @@
+---
+- hosts: python_course
+#  remote_user: vagrant
+  sudo: yes
+
+  roles:
+
+    - role: dhellmann.python-dev
+      python-versions:
+        - version: 3.6
+
+    - role: gcporras.virtualenvwrapper
+      virtualenvwrapper_shell_rc_file: /home/vagrant/.bashrc
+      virtualenvwrapper_venvs_home: /home/vagrant/.virtualenvs/
+
+  tasks:
+
+    - name: install system requirements
+      apt:
+        name: {{ item }}
+        state: present
+        update_cache: yes
+      with_items:
+        - git
+        - htop
+        - tree
+        - vim
+        - sqlite3
+
+    - name: change ownership of .virtualenvs
+      file:
+        path: /home/vagrant/.virtualenvs
+        owner: vagrant
+        group: vagrant
+        recurse: yes
+
+    - name: Setup an environment using Python 3.6
+      shell: virtualenv -p `which python3.6` /home/vagrant/.virtualenvs/{{ application_name }}
+
+    - name: install python requirements
+      pip:
+        requirements: {{ playbook_dir }}/requirements/python-{{ environ }}.txt
+        virtualenv: /home/vagrant/.virtualenvs/{{ application_name }}
+        state: present
+
+    # TODO remove setuptools-17.1.1.zip: file path=./setuptools-* state=absent
